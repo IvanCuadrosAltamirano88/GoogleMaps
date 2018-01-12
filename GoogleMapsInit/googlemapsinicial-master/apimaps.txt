@@ -1,0 +1,8 @@
+
+https://developers.google.com/maps/documentation/javascript/examples/place-search
+
+MULTIPLE LUGARES
+https://www.taniarascia.com/google-maps-apis-for-multiple-locations/
+
+
+https://stackoverflow.com/questions/45507427/stop-marker-animation-in-google-maps-with-multiple-markers

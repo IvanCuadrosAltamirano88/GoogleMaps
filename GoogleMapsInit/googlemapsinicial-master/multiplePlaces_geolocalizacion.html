@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Info window with <code>maxWidth</code></title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+      // This example displays a marker at the center of Australia.
+      // When the user clicks the marker, an info window opens.
+      // The maximum width of the info window is set to 200 pixels.
+
+      function initMap() {
+        
+
+
+        var iglesiaIBB = {
+		      info: '<strong>Chipotle on iglesiaIBB</strong><br>\
+					5224 N Broadway St<br> Chicago, IL 60640<br>\
+					<a href="https://goo.gl/maps/jKNEDz4SyyH2">Get Directions</a>',
+		      lat: -11.861691610680246,
+		      long: -77.08171779289842
+	      };
+
+        var CP_GerzonDaCruz = {
+		      info: '<strong>Chipotle on CP_GerzonDaCruz</strong><br>\
+					5224 N Broadway St<br> Chicago, IL 60640<br>\
+					<a href="https://goo.gl/maps/jKNEDz4SyyH2">Get Directions</a>',
+		      lat: -11.868043878993799,
+		      long: -77.07890683785081
+	      };
+
+        
+        var CP_Rosaura = {
+		      info: '<strong>Chipotle on CP_Rosaura</strong><br>\
+					5224 N Broadway St<br> Chicago, IL 60640<br>\
+					<a href="https://goo.gl/maps/jKNEDz4SyyH2">Get Directions</a>',
+		      lat: -11.861901605385782,
+		      long: -77.07775885239244
+	      };
+    
+
+        var CP_ElsaQuispe = {
+		      info: '<strong>Chipotle on CP_ElsaQuispe</strong><br>\
+					5224 N Broadway St<br> Chicago, IL 60640<br>\
+					<a href="https://goo.gl/maps/jKNEDz4SyyH2">Get Directions</a>',
+		      lat: -11.858205674955931,
+		      long: -77.08486134186387
+	      };
+
+        //lugares que se mostraran
+        var locations = [
+           [iglesiaIBB.info, iglesiaIBB.lat, iglesiaIBB.long, 0],
+           [CP_GerzonDaCruz.info, CP_GerzonDaCruz.lat, CP_GerzonDaCruz.long, 1],
+           [CP_Rosaura.info, CP_Rosaura.lat, CP_Rosaura.long, 2],
+           [CP_ElsaQuispe.info, CP_ElsaQuispe.lat, CP_ElsaQuispe.long, 3]
+        ];
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+		      zoom: 16, // se muestra m,as grande o mas pequeño el zoom del mapa
+		      center: new google.maps.LatLng(-11.861691610680246, -77.08171779289842), // lugarb de centro
+          //center: {lat: -34.397, lng: 150.644},
+		      mapTypeId: google.maps.MapTypeId.ROADMAP
+	      });
+
+        var infowindow = new google.maps.InfoWindow({});
+
+	      var marker, i;
+
+        for (i = 0; i < locations.length; i++) {
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+            map: map
+          });
+
+          google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            return function () {
+              infowindow.setContent(locations[i][0]);
+              infowindow.open(map, marker);
+            }
+          })(marker, i));
+        }
+
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+
+              infowindow.setPosition(pos);
+              infowindow.setContent('Location found.');
+              map.setCenter(pos);
+            }, function() {
+              handleLocationError(true, infowindow, map.getCenter());
+            });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infowindow, map.getCenter());
+        }
+
+      }
+
+      function handleLocationError(browserHasGeolocation, infowindow, pos) {
+        console.log("handleLocationError");
+        infowindow.setPosition(pos);
+        infowindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsVBJY0Uw96ezfkymrNupzwUbBx-aLZSA&callback=initMap">
+    </script>
+  </body>
+</html>
